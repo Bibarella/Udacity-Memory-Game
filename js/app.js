@@ -48,8 +48,11 @@ function shuffle(array) {
 
 	deck.addEventListener('click', event => {
 		const clickTarget = event.target;
-		if (isClickValid(clickTarget)
-		){
+		if (isClickValid(clickTarget)){
+			if (clockOff) {
+				startClock();
+				clockOff = false;
+			}
 			toggleCard(clickTarget);
 			addToggleCard(clickTarget);
 			if (toggledCards.length === 2) {
@@ -124,4 +127,27 @@ function hideStar() {
 hideStar();
 hideStar();
 
-	
+let clockOff = true;
+let time = 0
+;
+
+function startClock() {
+	let clockId = setInterval(() => {
+		time++;
+		displayTime();
+	}, 1000);
+}
+
+function displayTime() {
+	const clock = document.querySelector('.clock');
+	console.log(clock);
+	clock.innerHTML = time;
+	const minutes = Math.floor(time / 60);
+	const seconds = Math.floor(time % 60);
+	if (seconds < 10) {
+		clock.innerHTML = `${minutes}:0${seconds}`;
+	} else {
+		clock.innerHTML = `${minutes}:${seconds}`;
+	}
+	console.log(clock);
+}	
