@@ -105,6 +105,19 @@ function addMove() {
 	movesText.innerHTML = moves;
 }
 
-
+function checkScore() {
+	if (moves === 16 || moves === 24
+	){	removeStar();
+	}
+}
 	
+function hideStar() {
+	const starList = document.querySelectorAll('.stars li');
+	for (star of starList) {
+		star.style.display = 'none';
+	}
+}
+hideStar();
+
+
 	
