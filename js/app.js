@@ -45,7 +45,7 @@ const deck = document.querySelector('.deck');
 			toggleCard(clickTarget);
 			addToggleCard(clickTarget);
 			if (toggleCards.length === 2) {
-				console.log('2 cards!');
+				checkForMatch();
 		}
 	}	
 });
