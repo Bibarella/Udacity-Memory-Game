@@ -40,38 +40,41 @@ function shuffle(array) {
 const deck = document.querySelector('.deck');
 	deck.addEventListener('click', event => {
 		const clickTarget = event.target;
-		if (clickTarget.classList.contains('card') && toggleCards.length < 2) {
+		if (clickTarget.classList.contains('card') && toggledCards.length < 2) {
 			toggleCard(clickTarget);
 			addToggleCard(clickTarget);
-			if (toggleCards.length === 2) {
+			if (toggledCards.length === 2) {
 				checkForMatch();
 		}
 	}	
 });
 
-let toggleCards = [];
+let toggledCards = [];
 
-function toggleCard(clickTarget) {
-	clickTarget.classList.toggle('open');
-	clickTarget.classList.toggle('show');
+function toggleCard(card) {
+	card.classList.toggle('open');
+	card.classList.toggle('show');
 }
 
 function addToggleCard(clickTarget) {
 	toggledCards.push(clickTarget);
-	console.log(toggleCards);
+	console.log(toggledCards);
 }
 
 function checkForMatch() {
 	if (
-		toggleCards[0].firstElementChild.className ===
-		toggleCards[1].firstElementChild.className
+		toggledCards[0].firstElementChild.className ===
+		toggledCards[1].firstElementChild.className
 	) {
 		toggledCards[0].classList.toggle('match');
 		toggledCards[1].classList.toggle('match');
-		toggleCards = [];
+		toggledCards = [];
 	} else {
 			console.log('Not a match!');
-			toggleCards = [];
+			toggleCard(toggledCards[0]);
+			toggleCard(toggledCards[1]);
+			toggledCards = [];
+			
 	}
 }
 
