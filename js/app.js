@@ -2,6 +2,11 @@
  * Create a list that holds all of your cards
  */ 
 const deck = document.querySelector('.deck');
+let toggledCards = [];
+let moves = 0;
+let clockOff = true;
+let time = 0;
+let clockId;
 
 function shuffleDeck() {
 	const cardsToShuffle = Array.from(document.querySelectorAll('.deck li'));
@@ -72,8 +77,6 @@ function isClickValid(clickTarget) {
 	);
 }
 
-let toggledCards = [];
-
 function toggleCard(card) {
 	card.classList.toggle('open');
 	card.classList.toggle('show');
@@ -101,8 +104,6 @@ function checkForMatch() {
 	}
 }
 
-let moves = 0;
-
 function addMove() {
 	moves++;
 	const movesText = document.querySelector('.moves');
@@ -127,14 +128,11 @@ function hideStar() {
 hideStar();
 hideStar();
 
-let clockOff = true;
-let time = 0
-;
-
 function startClock() {
-	let clockId = setInterval(() => {
+	clockId = setInterval(() => {
 		time++;
 		displayTime();
+		console.log(time);
 	}, 1000);
 }
 
@@ -150,4 +148,8 @@ function displayTime() {
 		clock.innerHTML = `${minutes}:${seconds}`;
 	}
 	console.log(clock);
+}	
+
+function stopClock() {
+	clearInterval(clockId);
 }	

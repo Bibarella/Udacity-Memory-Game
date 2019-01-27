@@ -107,3 +107,9 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.modal__background {
+	position: absolute;
+	width: 100%;
+	background: rgba(255,183,13,1);
+}
