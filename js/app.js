@@ -153,3 +153,51 @@ function displayTime() {
 function stopClock() {
 	clearInterval(clockId);
 }	
+
+function toggleModal() {
+	const modal = document.querySelector('.modal__background');
+	modal.classList.toggle('hide');
+}
+
+toggleModal()
+toggleModal()
+
+function writeModalStats() {
+	const timeStat = document.querySelector('.modal__time');
+	const clockTime = document.querySelector('.clock').innerHTML;
+	const moveStat = document.querySelector('.modal__moves');
+	const stars = getStars();
+	
+	timeStat.innerHTML = `Time = ${clockTime}`;
+	movesStat.innerHTML = `Moves = ${moves}`; 
+	starsStat.innerHTML = `Stars = ${stars}`;
+} 
+
+time = 121;
+displayTime();
+moves = 16;
+checkScore();
+
+writeModalStats();
+toggleModal();
+
+function getStars() {
+	stars = document.querySelectorAll('.stars li');
+	starCount = 0;
+	for (star of stars) {
+		if (star.style.display !== 'none') {
+			starCount++;
+		}
+	}
+	console.log(starCount);
+	return starCount;
+}
+
+document.querySelector('.modal__cancel').addEventListener('click', () => {
+	toggleModal();
+});
+
+document.querySelector('.modal__replay').addEventListener('click', () => {
+	console.log('replay');
+});
+
