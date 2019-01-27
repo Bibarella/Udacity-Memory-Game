@@ -1,7 +1,16 @@
 /*
  * Create a list that holds all of your cards
- */
+ */ 
+const deck = document.querySelector('.deck');
 
+function shuffleDeck() {
+	const cardsToShuffle = Array.from(document.querySelectorAll('.deck li'));
+	const shuffledCards = shuffle(cardsToShuffle);
+	for (card of shuffledCards) {
+		deck.appendChild(card);
+	}
+}
+shuffleDeck();
 
 /*
  * Display the cards on the page
@@ -37,11 +46,9 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-const deck = document.querySelector('.deck');
 	deck.addEventListener('click', event => {
 		const clickTarget = event.target;
-		if (clickTarget.classList.contains('card') && toggledCards.length < 2 &&
-			!toggledCards.includes(clickTarget)
+		if (isClickValid(clickTarget)
 		){
 			toggleCard(clickTarget);
 			addToggleCard(clickTarget);
@@ -50,6 +57,15 @@ const deck = document.querySelector('.deck');
 		}
 	}	
 });
+
+function isClickValid(clickTarget) {
+	return (
+		clickTarget.classList.contains('card') &&
+		!clickTarget.classList.contains('match') &&
+		toggledCards.length < 2 &&
+		!toggledCards.includes(clickTarget)
+	);
+}
 
 let toggledCards = [];
 
@@ -79,6 +95,8 @@ function checkForMatch() {
 		}, 1000);
 	}
 }
+
+let moves = 0;
 
 
 
