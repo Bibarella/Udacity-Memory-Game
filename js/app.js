@@ -40,11 +40,13 @@ function shuffle(array) {
 const deck = document.querySelector('.deck');
 	deck.addEventListener('click', event => {
 		const clickTarget = event.target;
-		if (clickTarget.classList.contains('card') && toggledCards.length < 2) {
+		if (clickTarget.classList.contains('card') && toggledCards.length < 2 &&
+			!toggledCards.includes(clickTarget)
+		){
 			toggleCard(clickTarget);
 			addToggleCard(clickTarget);
 			if (toggledCards.length === 2) {
-				checkForMatch();
+				checkForMatch(clickTarget);
 		}
 	}	
 });
@@ -70,11 +72,11 @@ function checkForMatch() {
 		toggledCards[1].classList.toggle('match');
 		toggledCards = [];
 	} else {
-			console.log('Not a match!');
+		setTimeout(() => {
 			toggleCard(toggledCards[0]);
 			toggleCard(toggledCards[1]);
 			toggledCards = [];
-			
+		}, 1000);
 	}
 }
 
