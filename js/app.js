@@ -54,6 +54,7 @@ function shuffle(array) {
 			addToggleCard(clickTarget);
 			if (toggledCards.length === 2) {
 				checkForMatch(clickTarget);
+				addMove();
 		}
 	}	
 });
@@ -98,6 +99,11 @@ function checkForMatch() {
 
 let moves = 0;
 
+function addMove() {
+	moves++;
+	const movesText = document.querySelector('.moves');
+	movesText.innerHTML = moves;
+}
 
 
 	
