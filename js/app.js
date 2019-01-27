@@ -228,5 +228,27 @@ function resetStars() {
 
 document.querySelector('.restart').addEventListener('click', resetGame);
 
-document.querySelector('.modal__replay').addEventListener('click', resetGame);
+document.querySelector('.modal__replay').addEventListener('click', replayGame);
 
+const TOTAL_PAIRS = 8;
+	if (matched === TOTAL_PAIRS) {
+		gameOver();
+	}
+	
+function gameOver() {
+	stopClock();
+	writeModalStats();
+	toggleModal();
+}
+
+function replayGame() {
+	resetGame();
+	toggleModal();
+}
+
+function resetCards() {
+	const cards = document.querySelectorAll('.deck li');
+	for (let card of cards) {
+		card.className = 'card';
+	}
+}
