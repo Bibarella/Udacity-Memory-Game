@@ -36,7 +36,6 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-let toggleCards = [];
 
 const deck = document.querySelector('.deck');
 	deck.addEventListener('click', event => {
@@ -49,6 +48,8 @@ const deck = document.querySelector('.deck');
 		}
 	}	
 });
+
+let toggleCards = [];
 
 function toggleCard(clickTarget) {
 	clickTarget.classList.toggle('open');
@@ -65,9 +66,12 @@ function checkForMatch() {
 		toggleCards[0].firstElementChild.className ===
 		toggleCards[1].firstElementChild.className
 	) {
-		console.log('Match!');
+		toggledCards[0].classList.toggle('match');
+		toggledCards[1].classList.toggle('match');
+		toggleCards = [];
 	} else {
 			console.log('Not a match!');
+			toggleCards = [];
 	}
 }
 
