@@ -3,19 +3,23 @@
  */ 
 let toggledCards = [];
 let moves = 0;
-let clockOff = true;
+let clockIsStopped = true; 
 let time = 0;
-let clockId;
+let clockTimer; 
 let matched =0;
 const TOTAL_PAIRS = 8;
 resetCards();
 
-const deck = document.querySelector('.deck');
+let deck = document.querySelector('.deck');
+const starList = document.querySelectorAll('.stars li');
+const cards = document.querySelectorAll('.deck li');
+const stars = document.querySelectorAll('.stars');
+const clock = document.querySelector('.clock');
 
 function shuffleDeck() {
-	const cardsToShuffle = Array.from(document.querySelectorAll('.deck li'));
-	const shuffledCards = shuffle(cardsToShuffle);
-	for (card of shuffledCards) {
+	let cardsToShuffle = Array.from(document.querySelectorAll('.card'));
+	let shuffledCards = shuffle(cardsToShuffle);
+	for (let card of shuffledCards) {
 		deck.appendChild(card);
 	}
 }
@@ -58,9 +62,9 @@ function shuffle(array) {
 	deck.addEventListener('click', event => {
 		const clickTarget = event.target;
 		if (isClickValid(clickTarget)){
-			if (clockOff) {
+			if (clockIsStopped) {
 				startClock();
-				clockOff = false;
+				clockIsStopped = false;
 			}
 			toggleCard(clickTarget);
 			addToggleCard(clickTarget);
@@ -122,9 +126,8 @@ function checkScore() {
 	}
 }
 	
-function hideStar() {
-	const starList = document.querySelectorAll('.stars li');
-	for (star of starList) {
+function hideStar(stars) {
+	for (let star of starList) {
 		if (star.style.display !== 'none') {
 			star.style.display = 'none';
 			break;
@@ -133,7 +136,7 @@ function hideStar() {
 }
 
 function startClock() {
-	clockId = setInterval(function() {
+	clockTimer = setInterval(function() {
 		time++;
 		displayTime();
 		console.log(time);
@@ -141,11 +144,10 @@ function startClock() {
 }
 
 function displayTime() {
-	const clock = document.querySelector('.clock');
 	console.log(clock);
 	clock.innerHTML = time;
-	const minutes = Math.floor(time / 60);
-	const seconds = time % 60;
+	let minutes = Math.floor(time / 60);
+	let seconds = time % 60;
 	if (seconds < 10) {
 		clock.innerHTML = `${minutes}:0${seconds}`;
 	} else {
@@ -154,31 +156,29 @@ function displayTime() {
 }	
 
 function stopClock() {
-	clearInterval(clockId);
+	clearInterval(clockTimer);
 }	
 
 function toggleModal() {
 	const modal = document.querySelector('.modal__background');
 	modal.classList.toggle('hide');
-	/*modal.classList.toggle('show'); */
 }
 
 function writeModalStats() {
-	const timeStat = document.querySelector('.modal__time');
-	const clockTime = document.querySelector('.clock').innerHTML;
-	const movesStat = document.querySelector('.modal__moves');
-	const starsStat = document.querySelector('.modal__stars')
-	const stars = getStars();
+	let timeStat = document.querySelector('.modal__time');
+	let clockTime = document.querySelector('.clock').innerHTML;
+	let movesStat = document.querySelector('.modal__moves');
+	let starsStat = document.querySelector('.modal__stars');
+	let stars = getStars();
 	
 	timeStat.innerHTML = `Time = ${clockTime}`;
 	movesStat.innerHTML = `Moves = ${moves}`; 
 	starsStat.innerHTML = `Stars = ${stars}`;
 } 
 
-function getStars() {
-	stars = document.querySelectorAll('.stars li');
+function getStars(starList) {
 	starCount = 0;
-	for (star of stars) {
+	for (let star of stars) {
 		if (star.style.display !== 'none') {
 			starCount++;
 		}
@@ -186,17 +186,17 @@ function getStars() {
 	return starCount;
 }
 
-document.querySelector('.modal__cancel').addEventListener('click', function() {
-    toggleModal();
-});
+document.querySelector('.modal__cancel').addEventListener('click', toggleModal);
 
 document.querySelector('.modal__replay').addEventListener('click', replayGame);
 
 document.querySelector('.restart').addEventListener('click', resetGame);
 
+document.querySelector('.modal__close').addEventListener('click', toggleModal);
+
 function resetGame() {
 	matched = 0;
-	toggleCards = [];
+	toggledCards = [];
 	resetClockAndTime();
 	resetMoves();
 	resetStars();
@@ -206,7 +206,7 @@ function resetGame() {
 
 function resetClockAndTime() {
 	stopClock();
-	clockOff = true;
+	clockIsStopped = true;
 	time = 0;
 	displayTime();
 }
@@ -216,10 +216,9 @@ function resetMoves() {
 	document.querySelector('.moves').innerHTML = moves;
 }
 
-function resetStars() {
+function resetStars(stars) {
 	stars = 0;
-	const starList = document.querySelectorAll('.stars li');
-	for (star of starList) {
+	for (let star of starList) {
 		star.style.display = 'inline';
 	}
 }
